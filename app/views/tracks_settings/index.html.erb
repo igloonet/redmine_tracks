@@ -1,0 +1,15 @@
+<h2><%= l :tracks_setup %></h2>
+
+<div id="settings">
+  <div class="box tabular">
+      <% form_for :user, User.current, :url => {:controller => 'tracks_settings', :action => 'update_tracks' },
+                         :method => :post, :builder => TabularFormBuilder, :lang => current_language,
+                         :html => {:class => 'tabular'} do |f| %>
+
+         <p><%= f.text_field :tracks_url %></p>
+         <p><%= f.text_field :tracks_user %></p>
+         <p><%= f.text_field :tracks_token %></p>
+         <p><%= f.submit l(:save) %></p>
+       <% end %>
+  </div>
+</div>

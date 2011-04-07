@@ -1,0 +1,5 @@
+<% if User.current.tracks_url.present? %>
+  <div id="tracks">
+    <%= render :partial => 'tracks_settings/tracks_info', :locals => {:issue => issue} %>
+  </div>
+<% end %>

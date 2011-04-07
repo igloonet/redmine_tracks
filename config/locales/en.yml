@@ -1,0 +1,14 @@
+# English strings go here for Rails i18n
+en:
+  tracks_connect: "Create Todo in Tracks"
+  tracks_contexts: "Context"
+  tracks_projects: "Project"
+  tracks_see_context: "See context"
+  tracks_already_linked: "Already connected with Tracks todo - see %{context}"
+  tracks_error_saving_to_do: "Some error occures during saving, check Tracks application log"
+  tracks_invalid_credentials: "Invalid login credentials, you can correct them %{credentials}"
+  tracks_here: here
+  tracks_setup: "Tracks settings"
+  field_tracks_url: "Tracks URL"
+  field_tracks_user: "Tracks login"
+  field_tracks_token: "Tracks password"

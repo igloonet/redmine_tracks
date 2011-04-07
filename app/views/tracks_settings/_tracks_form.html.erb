@@ -1,0 +1,9 @@
+<% form_remote_tag :url => {:controller => 'tracks_settings', :action => 'create_connection', :id => @issue} do %>
+  <%= label_tag 'contexts', t('tracks_contexts') %>
+  <%= select_tag :context_id, options_from_collection_for_select(@contexts, "id", "name") %>
+    
+  <%= label_tag 'projects', t('tracks_projects') %>
+  <%= select_tag :project_id, content_tag(:option) + options_from_collection_for_select(@projects, "id", "name") %>
+  
+  <%= submit_tag t('save') %>
+<% end %>

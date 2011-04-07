@@ -1,0 +1,5 @@
+if @error.present?
+  page.replace_html "to_do_errors", :partial => 'tracks_error', :locals => {:message => @error}
+else
+  page.replace_html "tracks_form", :partial => 'tracks_settings/tracks_form', :issue => @issue
+end

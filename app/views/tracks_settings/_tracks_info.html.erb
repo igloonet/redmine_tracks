@@ -1,0 +1,19 @@
+<div class="contextual">
+  <% if issue.tracks_url.present? %>
+    <%= link_to t('tracks_see_context'), issue.tracks_url, :target => 'blank' %>
+  <% else %>
+    <%= link_to_remote t('tracks_connect'),
+      :url => {:controller => 'tracks_settings', :action => 'new_connection', :id => issue} %>
+  <% end %>
+</div>
+<p>
+  <strong>Tracks</strong>
+</p>
+
+<div id="to_do_errors"></div>
+<div id="tracks_form">
+  <% if issue.tracks_url.present? %>
+    <%= image_tag '../plugin_assets/redmine_tracks/images/done.png' %>
+    <%= t('tracks_already_linked', :context => auto_link(issue.tracks_url)) %>
+  <% end %>
+</div>

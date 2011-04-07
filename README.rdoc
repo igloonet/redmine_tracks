@@ -1,0 +1,58 @@
+= Tracks plugin
+
+This plugin allows you to copy your redmine issues to Tracks application and does some
+simple synchronization. Once you setup your account you can create Tracks Todo from any
+issue. It allows you to select Project and Context directly in redmine issue detail and
+it copies issue name, description, start date and due date to newly created Todo.
+
+It adds issue url to Todo description automatically. Once you create a Todo from an issue
+it's linked and you see this connection at issue detail. You can click on a link that brings
+you to a context in which you created the Todo. If you close an issue (you set any closed issue 
+status) it will automatically close you Todo in Tracks. It won't reopen it when you reopen 
+issue.
+
+Plugin is intended to be one-directional only. I hope you find it useful.
+
+Everything important is on github http://github.com/igloonet/redmine_tracks
+
+Code is released under MIT License
+
+= Prerequisites
+
+This plugin uses ActiveResource gem. You must install it in order
+to use this plugin.
+
+this should do the trick
+ gem install activeresource
+
+= Install
+
+1. Put this plugin into Rails.root/vendor/plugins/redmine_tracks
+2. Run rake db:migrate_plugins
+   - this will add tracks_token, tracks_user and tracks_url attribute to your user
+3. Restart redmine if it's already running
+4. Every user should see "Tracks" link in right upper corner (next to Sign out)
+   - if anyone sets his tracks url, username and token in here, you will se a link at issue update form
+   - if you want to disable integration, just leave all fields blank
+   - you have to specify your password, unfortunatelly plugin cannot use a token (such as for RSS)
+
+That's it, now you should be good to go
+
+= Changelog
+
+0.1 (2011-04-07)
+ * Plugin can create Todos in Tracks
+
+= Future work
+
+Context detection in redmine should be also made via REST API so if you changed context
+later via Tracks a link in redmine would be changed as well.
+
+Try to figure out how to use API token with ActiveResource and REST API.
+
+If you like this plugin, please consider donation.
+
+= Credits
+
+Thanks to IglooNET s.r.o. (my current employer) I was allowed to work on this plugin and release it 
+under MIT licence.
