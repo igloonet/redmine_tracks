@@ -4,12 +4,12 @@ class TracksIssueHook  < Redmine::Hook::ViewListener
   
   # :params, :issue
   def controller_issues_edit_before_save(context = {})
-    toggle_todo(context, 'active') if context[:issue].closing?
+    toggle_todo(context, 'active') if User.current.tracks_url.present? && context[:issue].tracks_todo_id.present? && context[:issue].closing? 
   end
   
   # :params, :issue, :time_entry, :journal
   def controller_issues_edit_after_save(context = {})
-    toggle_todo(context, 'completed') if context[:issue].changed? && context[:issue].closing? 
+    toggle_todo(context, 'completed') if User.current.tracks_url.present? && context[:issue].tracks_todo_id.present? && context[:issue].changed? && context[:issue].closing?
   end
   
   protected
