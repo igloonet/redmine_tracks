@@ -11,6 +11,8 @@ you to a context in which you created the Todo. If you close an issue (you set a
 status) it will automatically close you Todo in Tracks. It won't reopen it when you reopen 
 issue.
 
+Note that start data and due data are copied only if they are in future (or today)
+
 Plugin is intended to be one-directional only. I hope you find it useful.
 
 Everything important is on github http://github.com/igloonet/redmine_tracks
