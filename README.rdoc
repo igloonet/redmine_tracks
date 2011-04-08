@@ -42,13 +42,10 @@ That's it, now you should be good to go
 
 = Changelog
 
-0.1 (2011-04-07)
+0.1 (2011-04-08)
  * Plugin can create Todos in Tracks
 
 = Future work
-
-Context detection in redmine should be also made via REST API so if you changed context
-later via Tracks a link in redmine would be changed as well.
 
 Try to figure out how to use API token with ActiveResource and REST API.
 

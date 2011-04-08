@@ -4,12 +4,23 @@ class TracksIssueHook  < Redmine::Hook::ViewListener
   
   # :params, :issue
   def controller_issues_edit_before_save(context = {})
-    toggle_todo(context, 'active') if User.current.tracks_url.present? && context[:issue].tracks_todo_id.present? && context[:issue].closing? 
+    tracks_link = TracksLink.find_by_issue_id_and_user_id(context[:issue].id, User.current.id)
+    if User.current.tracks_url.present? && 
+      tracks_link.present? && 
+      context[:issue].closing?
+      toggle_todo(context, tracks_link, 'active')
+    end 
   end
   
   # :params, :issue, :time_entry, :journal
   def controller_issues_edit_after_save(context = {})
-    toggle_todo(context, 'completed') if User.current.tracks_url.present? && context[:issue].tracks_todo_id.present? && context[:issue].changed? && context[:issue].closing?
+    tracks_link = TracksLink.find_by_issue_id_and_user_id(context[:issue].id, User.current.id)
+    if User.current.tracks_url.present? && 
+      tracks_link.present? && 
+      context[:issue].changed? && 
+      context[:issue].closing?
+      toggle_todo(context, tracks_link, 'completed')
+    end
   end
   
   protected
@@ -26,10 +37,10 @@ class TracksIssueHook  < Redmine::Hook::ViewListener
     Todo.site.password = User.current.tracks_token
   end
   
-  def toggle_todo(context, state)
+  def toggle_todo(context, tracks_link, state)
     setup_todo
     begin
-      todo = Todo.find(context[:issue].tracks_todo_id)
+      todo = Todo.find(tracks_link.tracks_todo_id)
       todo.put(:toggle_check) if todo.state == state
     rescue Exception => e
       # silently ignore all messages and log them

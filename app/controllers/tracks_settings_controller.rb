@@ -32,11 +32,12 @@ class TracksSettingsController < ApplicationController
     
     todo = Todo.new(:context_id => params[:context_id], :project_id => params[:project_id],
           :description => @issue.to_s, :notes => notes)
-    todo.show_from = @issue.start_date.strftime("%d/%m/%Y") if @issue.start_date.present? && @issue.start_date >= 1.day.ago.to_date
-    todo.due = @issue.due_date.strftime("%d/%m/%Y") if @issue.due_date.present? && @issue.due_date >= 1.day.ago.to_date
+    todo.show_from = @issue.start_date.strftime("%d/%m/%Y") if @issue.start_date.present? && @issue.start_date >= Date.today
+    todo.due = @issue.due_date.strftime("%d/%m/%Y") if @issue.due_date.present? && @issue.due_date >= Date.today
     
     if @result = todo.save
-      @result &= @issue.update_attributes :tracks_url => todo.full_url, :tracks_todo_id => todo.id
+      tracks_link = TracksLink.new(:tracks_todo_id => todo.id, :user_id => User.current.id, :issue_id => @issue.id)
+      @result &= tracks_link.save
       # rollback unless connection between issue and todo was saved
       todo.destroy unless @result
     end
