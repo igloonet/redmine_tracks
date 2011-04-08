@@ -1,4 +1,4 @@
-class AddJidToUsers < ActiveRecord::Migration
+class AddTracksToUsers < ActiveRecord::Migration
   def self.up
     add_column :users, :tracks_url, :string, :null => true
     add_column :users, :tracks_user, :string, :null => true

@@ -29,11 +29,12 @@ class TracksSettingsController < ApplicationController
     @issue = Issue.find(params[:id])
     notes = @issue.description.size >= 1_000 ? @issue.description[0..999] + '...' : @issue.description
     notes = url_for(:controller => 'issues', :action => 'show', :id => @issue, :only_path => false) + "\n\n" + notes
-    
+
     todo = Todo.new(:context_id => params[:context_id], :project_id => params[:project_id],
           :description => @issue.to_s, :notes => notes)
-    todo.show_from = @issue.start_date.strftime("%d/%m/%Y") if @issue.start_date.present? && @issue.start_date >= Date.today
-    todo.due = @issue.due_date.strftime("%d/%m/%Y") if @issue.due_date.present? && @issue.due_date >= Date.today
+          
+    todo.show_from = @issue.start_date.strftime(User.current.tracks_time_format) if @issue.start_date.present? && @issue.start_date >= Date.today
+    todo.due = @issue.due_date.strftime(User.current.tracks_time_format) if @issue.due_date.present? && @issue.due_date >= Date.today
     
     if @result = todo.save
       tracks_link = TracksLink.new(:tracks_todo_id => todo.id, :user_id => User.current.id, :issue_id => @issue.id)
@@ -56,14 +57,10 @@ class TracksSettingsController < ApplicationController
   end
   
   def setup_resources
-    Context.site = User.current.tracks_url
-    Context.site.user = User.current.tracks_user
-    Context.site.password = User.current.tracks_token
-    TracksProject.site = User.current.tracks_url
-    TracksProject.site.user = User.current.tracks_user
-    TracksProject.site.password = User.current.tracks_token
-    Todo.site = User.current.tracks_url
-    Todo.site.user = User.current.tracks_user
-    Todo.site.password = User.current.tracks_token
+    [Context, TracksProject, Todo].each do |resource|
+      resource.site = User.current.tracks_url
+      resource.site.user = User.current.tracks_user
+      resource.site.password = User.current.tracks_token
+    end
   end
 end
