@@ -4,9 +4,9 @@ cs:
   tracks_contexts: "Kontext"
   tracks_projects: "Projekt"
   tracks_see_context: "Zobrazit kontext"
-  tracks_already_linked: "Již spojeno s Tracks viz kontext %{context}"
+  tracks_already_linked: "Již spojeno s Tracks viz kontext {{context}}"
   tracks_error_saving_to_do: "Během ukládání došlo k nějaké chybě, zkontrolujte log aplikace Tracks"
-  tracks_invalid_credentials: "Neplatné přihlašovací údaje, opravte je %{credentials}"
+  tracks_invalid_credentials: "Neplatné přihlašovací údaje, opravte je {{credentials}}"
   tracks_here: zde
   tracks_setup: "Nastavení Tracks"
   field_tracks_url: "Tracks URL"
