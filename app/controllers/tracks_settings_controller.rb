@@ -29,9 +29,11 @@ class TracksSettingsController < ApplicationController
     @issue = Issue.find(params[:id])
     notes = @issue.description.size >= 1_000 ? @issue.description[0..999] + '...' : @issue.description
     notes = url_for(:controller => 'issues', :action => 'show', :id => @issue, :only_path => false) + "\n\n" + notes
+    description = @issue.to_s
+    description = description.size > 100 ? description[0..99] : description.to_s
 
     todo = Todo.new(:context_id => params[:context_id], :project_id => params[:project_id],
-          :description => @issue.to_s, :notes => notes)
+          :description => description, :notes => notes)
           
     todo.show_from = @issue.start_date.strftime(User.current.tracks_time_format) if @issue.start_date.present? && @issue.start_date >= Date.today
     todo.due = @issue.due_date.strftime(User.current.tracks_time_format) if @issue.due_date.present? && @issue.due_date >= Date.today
