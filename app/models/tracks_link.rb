@@ -10,7 +10,7 @@ class TracksLink < ActiveRecord::Base
   
   def get_context_id
     @context_id ||= Todo.find(self.tracks_todo_id).context_id
-  rescue ActiveResource::ResourceNotFound
+  rescue ActiveResource::ResourceNotFound, ActiveResource::ServerError
   end
   
   def setup_todo
