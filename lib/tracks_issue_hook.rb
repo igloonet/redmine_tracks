@@ -7,7 +7,7 @@ class TracksIssueHook  < Redmine::Hook::ViewListener
     tracks_link = TracksLink.find_by_issue_id_and_user_id(context[:issue].id, User.current.id)
     if User.current.tracks_url.present? && tracks_link.present?
       toggle_todo(context, tracks_link, 'active') if context[:issue].closing?
-      update_todo(tracks_link) if User.current.tracks_time_sync
+      update_todo(tracks_link, context[:issue]) if User.current.tracks_time_sync
     end 
   end
   
@@ -16,7 +16,7 @@ class TracksIssueHook  < Redmine::Hook::ViewListener
     tracks_link = TracksLink.find_by_issue_id_and_user_id(context[:issue].id, User.current.id)
     if User.current.tracks_url.present? && tracks_link.present? && context[:issue].changed?
       toggle_todo(context, tracks_link, 'completed') if context[:issue].closing?
-      update_todo(tracks_link) if User.current.tracks_time_sync
+      update_todo(tracks_link, context[:issue]) if User.current.tracks_time_sync
     end
   end
   
@@ -47,12 +47,12 @@ class TracksIssueHook  < Redmine::Hook::ViewListener
     end
   end
   
-  def update_todo(tracks_link)
+  def update_todo(tracks_link, issue)
     setup_todo
     begin
       todo = Todo.find(tracks_link.tracks_todo_id)
-      todo.show_from = tracks_link.issue.start_date.strftime(User.current.tracks_time_format) if tracks_link.issue.start_date.present? && tracks_link.issue.start_date >= Date.today
-      todo.due = tracks_link.issue.due_date.strftime(User.current.tracks_time_format) if tracks_link.issue.due_date.present? && tracks_link.issue.due_date >= Date.today
+      todo.show_from = issue.start_date.strftime(User.current.tracks_time_format) if issue.start_date.present? && issue.start_date >= Date.today
+      todo.due = issue.due_date.strftime(User.current.tracks_time_format) if issue.due_date.present? && issue.due_date >= Date.today
 
       todo.save
 
