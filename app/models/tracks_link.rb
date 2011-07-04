@@ -1,4 +1,6 @@
 class TracksLink < ActiveRecord::Base
+  belongs_to :issue
+
   def tracks_url
     setup_todo
     if User.current.tracks_url && get_context_id

@@ -33,12 +33,21 @@ class TracksSettingsController < ApplicationController
     description = description.size > 100 ? description[0..99] : description.to_s
 
     todo = Todo.new(:context_id => params[:context_id], :project_id => params[:project_id],
-          :description => description, :notes => notes)
+          :description => description.tr("'\"", ''), :notes => notes)
           
     todo.show_from = @issue.start_date.strftime(User.current.tracks_time_format) if @issue.start_date.present? && @issue.start_date >= Date.today
     todo.due = @issue.due_date.strftime(User.current.tracks_time_format) if @issue.due_date.present? && @issue.due_date >= Date.today
     
-    if @result = todo.save
+    begin
+      @result = todo.save
+    rescue ActiveResource::ServerError
+      # show from makes problems some time, nilify it then
+      Rails.logger.fatal 'trying to nilify show from and saving again'
+      todo.show_from = nil
+      @result = todo.save
+    end
+ 
+    if @result
       tracks_link = TracksLink.new(:tracks_todo_id => todo.id, :user_id => User.current.id, :issue_id => @issue.id)
       @result &= tracks_link.save
       # rollback unless connection between issue and todo was saved

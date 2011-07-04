@@ -11,12 +11,4 @@ Redmine::Plugin.register :redmine_tracks do
     :caption => 'Tracks', :if => Proc.new{ !User.current.kind_of?(AnonymousUser) }
     
   require 'activeresource'
-
-  #require_dependency 'app/models/mailer'
-  #require_dependency 'redmine_jabber/mailer'
-
-  #settings :default => {
-  #   'bot_jid' => '',
-  #   'bot_password' => ''
-  # }, :partial => 'settings/jabber_settings'
 end

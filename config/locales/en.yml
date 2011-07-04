@@ -13,3 +13,4 @@ en:
   field_tracks_user: "Tracks login"
   field_tracks_token: "Tracks password"
   field_tracks_time_format: "Date format set in Tracks"
+  field_tracks_time_sync: "Sychronize times Start a Due on"
