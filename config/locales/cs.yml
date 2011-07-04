@@ -13,3 +13,4 @@ cs:
   field_tracks_user: "Tracks login"
   field_tracks_token: "Tracks heslo"
   field_tracks_time_format: "Formát data nastavený Tracks"
+  field_tracks_time_sync: "Sychronizovat časy Začátek a Uzavřít do"
