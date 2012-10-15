@@ -1,7 +1,7 @@
 class TracksLink < ActiveRecord::Base
   belongs_to :issue
 
-  def tracks_url
+	def tracks_url
     setup_todo
     if User.current.tracks_url && get_context_id
       "#{Todo.site.scheme}://#{Todo.site.host}/#{Context.to_s.pluralize.underscore}/#{self.get_context_id}"
