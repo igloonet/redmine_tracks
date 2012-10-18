@@ -3,8 +3,8 @@
   <% if tracks_link.present? %>
     <%= link_to t('tracks_see_context'), tracks_link.tracks_url, :target => 'blank' %>
   <% else %>
-    <%= link_to_remote t('tracks_connect'),
-      :url => {:controller => 'tracks_settings', :action => 'new_connection', :id => issue} %>
+    <%= link_to t('tracks_connect'), {:controller => 'tracks_settings', :action => 'new_connection', :id => issue},
+      :remote => true %>
   <% end %>
 </div>
 <p>
