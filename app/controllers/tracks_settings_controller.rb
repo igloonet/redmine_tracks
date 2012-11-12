@@ -58,6 +58,7 @@ class TracksSettingsController < ApplicationController
     @result = false
     # another possible errors that could be catched 
     # 404 - bad url of any resource, this should be seen only when there is a problem in code
+    # 406 - not applicable means communication problem, e.g. redmine asks for json but tracks responds only to xml
     # 422 - unprocessable entity means that there are some values missing I guess
   end
 
@@ -69,6 +70,7 @@ class TracksSettingsController < ApplicationController
   
   def setup_resources
     [Context, TracksProject, Todo].each do |resource|
+      resource.format = ActiveResource::Formats::XmlFormat
       resource.site = User.current.tracks_url
       resource.site.user = User.current.tracks_user
       resource.site.password = User.current.tracks_token

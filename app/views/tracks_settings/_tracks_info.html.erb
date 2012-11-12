@@ -15,6 +15,6 @@
 <div id="tracks_form">
   <% if tracks_link.present? %>
     <%= image_tag '../plugin_assets/redmine_tracks/images/done.png' %>
-    <%= t('tracks_already_linked', :context => auto_link(tracks_link.tracks_url)) %>
+    <%= t('tracks_already_linked', :context => auto_link(tracks_link.tracks_url)).html_safe %>
   <% end %>
 </div>

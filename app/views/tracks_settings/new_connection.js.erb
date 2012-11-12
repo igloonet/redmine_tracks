@@ -1,0 +1,5 @@
+<% if @error.present? %>
+  $("#to_do_errors").html("<%= j render(:partial => 'tracks_error', :locals => {:message => @error}) %>")
+<% else %>
+  $("#tracks_form").html("<%= j render(:partial => 'tracks_settings/tracks_form', :issue => @issue) %>")
+<% end %>
