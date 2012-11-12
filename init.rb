@@ -9,6 +9,6 @@ Redmine::Plugin.register :redmine_tracks do
   version '0.0.1'
 
   menu :account_menu, :tracks, { :controller => 'tracks_settings', :action => 'index' }, 
-    :caption => 'Tracks', :if => Proc.new{ !User.current.kind_of?(AnonymousUser) }
+    :caption => 'Tracks', :if => Proc.new{ !User.current.kind_of?(AnonymousUser) }, :before => :logout
     
 end
