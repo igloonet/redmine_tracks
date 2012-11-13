@@ -16,6 +16,7 @@ class TracksLink < ActiveRecord::Base
   end
   
   def setup_todo
+    Todo.format = ActiveResource::Formats::XmlFormat
     Todo.site = User.current.tracks_url
     Todo.site.user = User.current.tracks_user
     Todo.site.password = User.current.tracks_token 
