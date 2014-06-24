@@ -1,11 +1,10 @@
 <div class="contextual">
   <% tracks_link = TracksLink.find_by_issue_id_and_user_id(issue, User.current.id) %>
   <% if tracks_link.present? %>
-    <%= link_to t('tracks_see_context'), tracks_link.tracks_url, :target => 'blank' %>
-  <% else %>
-    <%= link_to t('tracks_connect'), {:controller => 'tracks_settings', :action => 'new_connection', :id => issue},
-      :remote => true %>
+    <%= link_to t('tracks_see_context'), tracks_link.tracks_url, :target => 'blank' %> |
   <% end %>
+  <%= link_to t('tracks_connect'), {:controller => 'tracks_settings', :action => 'new_connection', :id => issue},
+    :remote => true %>
 </div>
 <p>
   <strong>Tracks</strong>
