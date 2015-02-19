@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'redmine'
 require 'tracks_issue_hook'
+require 'issue_patch'
 
 Redmine::Plugin.register :redmine_tracks do
   name 'Redmine Tracks plugin'
