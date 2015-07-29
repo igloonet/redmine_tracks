@@ -4,7 +4,7 @@ class TracksSettingsController < ApplicationController
   def index
   end
 
-  def update_tracks
+  def update
     User.current.attributes = params[:user]
     if User.current.save
       flash[:notice] = l(:notice_successful_update)
@@ -15,17 +15,17 @@ class TracksSettingsController < ApplicationController
     end
   end
   
-  before_filter :setup_resources, :only => [:new_connection, :create_connection]
+  before_filter :setup_resources, :only => [:new, :create]
   
-  def new_connection
+  def new
     @issue = Issue.find(params[:id])
-    @contexts = Context.find :all
-    @projects = TracksProject.find :all
+    @contexts = Context.all
+    @projects = TracksProject.all
   rescue ActiveResource::UnauthorizedAccess
-    @error = t('tracks_invalid_credentials', :credentials => @template.link_to(t('tracks_here'), :controller => 'tracks_settings'))
+    @error = t('tracks_invalid_credentials', :credentials => view_context.link_to(t('tracks_here'), :controller => 'tracks_settings')).html_safe
   end
   
-  def create_connection
+  def create
     @issue = Issue.find(params[:id])
     notes = @issue.description.size >= 1_000 ? @issue.description[0..999] + '...' : @issue.description
     notes = url_for(:controller => 'issues', :action => 'show', :id => @issue, :only_path => false) + "\n\n" + notes
